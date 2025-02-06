@@ -129,29 +129,31 @@ public class SpotifyRepository {
     }
 
     public Song likeSong(String mobile, String songTitle) throws Exception {
-         User user = users.stream().filter(u -> u.getMobile().equals(mobile)).findFirst().orElse(null);
-    if (user == null) {
-        throw new Exception("User does not exist");
+    User user = users.stream().filter(u -> u.getMobile().equals(mobile)).findFirst().orElse(null);
+        if (user == null) {
+            throw new Exception("User does not exist");
+        }
+
+        Song song = songs.stream().filter(s -> s.getTitle().equals(songTitle)).findFirst().orElse(null);
+        if (song == null) {
+            throw new Exception("Song does not exist");
+        }
+
+        songLikeMap.putIfAbsent(song, new ArrayList<>());
+        if (!songLikeMap.get(song).contains(user)) {
+            songLikeMap.get(song).add(user);
+        }
+
+        Artist artist = artists.stream().filter(a -> a.getName().equals(song.getArtist())).findFirst().orElse(null);
+        if (artist != null) {
+            artist.setLikes(artist.getLikes() + 1); // Increment artist's like count
+        }
+
+        return song;
+
     }
 
-    Song song = songs.stream().filter(s -> s.getTitle().equals(songTitle)).findFirst().orElse(null);
-    if (song == null) {
-        throw new Exception("Song does not exist");
-    }
-
-    songLikeMap.putIfAbsent(song, new ArrayList<>());
-    if (!songLikeMap.get(song).contains(user)) {
-        songLikeMap.get(song).add(user);
-    }
-
-    Artist artist = artists.stream().filter(a -> a.getName().equals(song.getArtist())).findFirst().orElse(null);
-    if (artist != null && !songLikeMap.get(song).contains(user)) {
-        artist.setLikes(artist.getLikes() + 1);
-    }
-
-    return song;
-    }
-
+   
     public String mostPopularArtist() {
        return artists.stream()
                 .max(Comparator.comparingInt(a -> a.getLikes())) // Find the artist with the highest like count
@@ -159,11 +161,12 @@ public class SpotifyRepository {
                 .orElse("No popular artist");
     }
 
-   public String mostPopularSong() {
+ public String mostPopularSong() {
     return songs.stream()
-                .max(Comparator.comparingInt(s -> songLikeMap.get(s).size()))  
-                .map(Song::getTitle) 
-                .orElse(null); 
+                .max(Comparator.comparingInt(s -> songLikeMap.get(s).size()))  // Find the song with most likes
+                .map(Song::getTitle)
+                .orElse("No popular song");  
 }
+
 
 }
