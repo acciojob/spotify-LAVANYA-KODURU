@@ -153,7 +153,10 @@ public class SpotifyRepository {
     }
 
     public String mostPopularArtist() {
-        return songs.stream().max(Comparator.comparingInt(s -> songLikeMap.get(s).size())).map(Song::getTitle).orElse(null);
+       return artists.stream()
+                .max(Comparator.comparingInt(a -> a.getLikes())) // Find the artist with the highest like count
+                .map(Artist::getName)
+                .orElse("No popular artist");
     }
 
    public String mostPopularSong() {
