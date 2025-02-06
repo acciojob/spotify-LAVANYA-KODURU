@@ -128,30 +128,30 @@ public class SpotifyRepository {
     return playlist;
     }
 
-    public Song likeSong(String mobile, String songTitle) throws Exception {
+    public int likeSong(String mobile, String songTitle) throws Exception {
     User user = users.stream().filter(u -> u.getMobile().equals(mobile)).findFirst().orElse(null);
-        if (user == null) {
-            throw new Exception("User does not exist");
-        }
-
-        Song song = songs.stream().filter(s -> s.getTitle().equals(songTitle)).findFirst().orElse(null);
-        if (song == null) {
-            throw new Exception("Song does not exist");
-        }
-
-        songLikeMap.putIfAbsent(song, new ArrayList<>());
-        if (!songLikeMap.get(song).contains(user)) {
-            songLikeMap.get(song).add(user);
-        }
-
-        Artist artist = artists.stream().filter(a -> a.getName().equals(song.getArtist())).findFirst().orElse(null);
-        if (artist != null) {
-            artist.setLikes(artist.getLikes() + 1); // Increment artist's like count
-        }
-
-        return song;
-
+    if (user == null) {
+        throw new Exception("User does not exist");
     }
+
+    Song song = songs.stream().filter(s -> s.getTitle().equals(songTitle)).findFirst().orElse(null);
+    if (song == null) {
+        throw new Exception("Song does not exist");
+    }
+
+    songLikeMap.putIfAbsent(song, new ArrayList<>());
+    if (!songLikeMap.get(song).contains(user)) {
+        songLikeMap.get(song).add(user);
+    }
+
+    Artist artist = artists.stream().filter(a -> a.getName().equals(song.getArtist())).findFirst().orElse(null);
+    if (artist != null) {
+        artist.setLikes(artist.getLikes() + 1); // Increment artist's like count
+    }
+
+    return 1;  // Return success status
+}
+
 
    
     public String mostPopularArtist() {
