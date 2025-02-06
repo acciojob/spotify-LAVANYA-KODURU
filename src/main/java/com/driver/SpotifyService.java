@@ -1,6 +1,8 @@
 package com.driver;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,7 @@ public class SpotifyService {
     }
 
     public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
-        return spotifyRepository.createPlaylistOnName(mobile, titzle, songTitles);
+        return spotifyRepository.createPlaylistOnName(mobile, title, songTitles);
     }
 
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
