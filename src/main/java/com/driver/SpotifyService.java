@@ -31,7 +31,7 @@ public class SpotifyService {
     }
 
     public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
-        return spotifyRepository.createPlaylistOnName(mobile, title, songTitles);
+        return spotifyRepository.createPlaylistOnName(mobile, titzle, songTitles);
     }
 
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
@@ -44,11 +44,19 @@ public class SpotifyService {
 
     public String mostPopularArtist() {
         // This method should call the repository to get the artist with the maximum number of likes.
-        return spotifyRepository.getMostPopularArtist();
+        return spotifyRepository.mostPopularArtist();
     }
 
     public String mostPopularSong() {
         // This method should call the repository to get the song with the maximum number of likes.
-        return spotifyRepository.getMostPopularSong();
+        return spotifyRepository.mostPopularSong();
     }
+        public String getMostPopularArtist() {
+        return spotifyRepository.mostPopularArtist(); // Delegate to repository
+    }
+
+    public String getMostPopularSong() {
+        return spotifyRepository.mostPopularSong(); // Delegate to repository
+    }
+
 }
