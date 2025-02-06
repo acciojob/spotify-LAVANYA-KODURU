@@ -156,7 +156,11 @@ public class SpotifyRepository {
         return songs.stream().max(Comparator.comparingInt(s -> songLikeMap.get(s).size())).map(Song::getTitle).orElse(null);
     }
 
-    public String mostPopularSong() {
-        return songs.stream().max(Comparator.comparingInt(s -> songLikeMap.get(s).size())).map(Song::getTitle).orElse(null);
-    }
+   public String mostPopularSong() {
+    return songs.stream()
+                .max(Comparator.comparingInt(s -> songLikeMap.get(s).size()))  
+                .map(Song::getTitle) 
+                .orElse(null); 
+}
+
 }
