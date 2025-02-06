@@ -4,16 +4,26 @@ public class Song {
     private String title;
     private int length;
     private int likes;
+    private Artist artist;
 
-    public Song(){
-
+    // Default constructor
+    public Song() {
     }
 
-    public Song(String title, int length){
+    // Constructor with title and length
+    public Song(String title, int length) {
         this.title = title;
         this.length = length;
     }
 
+    // Constructor with title, length, and artist
+    public Song(String title, int length, Artist artist) {
+        this.title = title;
+        this.length = length;
+        this.artist = artist;
+    }
+
+    // Getters and setters
     public String getTitle() {
         return title;
     }
@@ -36,5 +46,13 @@ public class Song {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 }
